@@ -1,5 +1,5 @@
 /**
- * @file keyboard.c
+ * @file game.c
  * @author Gabriel Hamel (gabriel.hamel.pro@gmail.com)
  * @brief
  * @version 1.0
@@ -12,10 +12,9 @@
 #include "engine.h"
 #include "engine_private.h"
 
-void engine_handle_key(bool pressed)
+void engine_set_game(game_t *game)
 {
     engine_t *engine = engine_get();
-    sfKeyCode code = GET_CURRENT_KEY(engine);
 
-    engine->game->handle_key(engine->game->content, code, pressed);
+    engine->game = game;
 }

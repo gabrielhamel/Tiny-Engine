@@ -10,10 +10,11 @@
  */
 
 #include "engine.h"
+#include "engine_private.h"
 
 void engine_handle_event()
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
 
     switch (engine->event.type) {
         case sfEvtClosed:
@@ -32,10 +33,14 @@ void engine_handle_event()
 
 void engine_update(void)
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
+
+    engine->game->update(engine->game->content, engine->elaspsed_time);
 }
 
 void engine_draw(void)
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
+
+    engine->game->draw(engine->game->content, GET_WINDOW(engine));
 }

@@ -10,6 +10,7 @@
  */
 
 #include "engine.h"
+#include "engine_private.h"
 
 engine_t *engine_get(void)
 {
@@ -26,16 +27,16 @@ void engine_create(const char *title,
                         unsigned int height,
                         bool fullscreen)
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
 
     engine->window = window_create(title, width, height, fullscreen);
-    engine->ellaspsedTime = 0;
+    engine->elaspsed_time = 0;
     engine->event = (sfEvent){0};
 }
 
 void engine_destroy(void)
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
 
     window_destroy(engine->window);
     free(engine);
@@ -43,14 +44,14 @@ void engine_destroy(void)
 
 void engine_launch(void)
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
 
     while (sfRenderWindow_isOpen(GET_WINDOW(engine))) {
         while (sfRenderWindow_pollEvent(GET_WINDOW(engine),
                                         &engine->event)) {
             engine_handle_event();
         }
-        engine->ellaspsedTime =
+        engine->elaspsed_time =
             sfTime_asSeconds(sfClock_restart(engine->window->time));
         engine_update();
         sfRenderWindow_clear(GET_WINDOW(engine), sfBlack);
@@ -61,7 +62,7 @@ void engine_launch(void)
 
 void engine_stop()
 {
-    engine_t *engine = ENGINE();
+    engine_t *engine = engine_get();
 
     sfRenderWindow_close(GET_WINDOW(engine));
 }

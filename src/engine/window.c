@@ -9,7 +9,8 @@
  *
  */
 
-#include "window.h"
+#include "engine.h"
+#include "engine_private.h"
 
 window_t *window_create(const char *title,
                         unsigned int width,

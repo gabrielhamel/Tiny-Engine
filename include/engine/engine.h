@@ -12,17 +12,13 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "window.h"
-
-#define ENGINE() (engine_get())
-#define GET_WINDOW(engine) (engine->window->window)
-#define GET_CURRENT_KEY(engine) (engine->event.key.code)
-#define KEY_VALUE(code) (sfKeyboard_isKeyPressed(code))
+#include "game.h"
 
 typedef struct {
     window_t *window;
     sfEvent event;
-    float ellaspsedTime;
+    float elaspsed_time;
+    game_t *game;
 } engine_t;
 
 engine_t *engine_get(void);
@@ -33,9 +29,6 @@ void engine_create( const char *title,
 void engine_destroy(void);
 void engine_launch(void);
 void engine_stop(void);
-void engine_update(void);
-void engine_draw(void);
-void engine_handle_event(void);
-void engine_handle_key(bool pressed);
+void engine_set_game(game_t *game);
 
 #endif // ENGINE_H
