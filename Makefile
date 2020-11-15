@@ -5,7 +5,7 @@ SRC =		$(SRC_DIR)/main.c				\
 			$(SRC_DIR)/engine/pipeline.c	\
 			$(SRC_DIR)/engine/window.c		\
 			$(SRC_DIR)/engine/keyboard.c	\
-			$(SRC_DIR)/engine/game.c		\
+			$(SRC_DIR)/engine/settings.c	\
 
 OBJ =		$(SRC:.c=.o)
 

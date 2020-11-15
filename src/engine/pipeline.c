@@ -12,7 +12,20 @@
 #include "engine.h"
 #include "engine_private.h"
 
-void engine_handle_event()
+bool engine_clock(void)
+{
+    engine_t *engine = engine_get();
+    float clock_time = sfTime_asSeconds(sfClock_getElapsedTime(engine->time));
+
+    if (clock_time >= engine->refresh_rate) {
+        engine->elaspsed_time = sfTime_asSeconds(
+                                    sfClock_restart(engine->time));
+        return true;
+    }
+    return false;
+}
+
+void engine_handle_event(void)
 {
     engine_t *engine = engine_get();
 
@@ -42,5 +55,5 @@ void engine_draw(void)
 {
     engine_t *engine = engine_get();
 
-    engine->game->draw(engine->game->content, GET_WINDOW(engine));
+    engine->game->draw(engine->game->content, engine->window);
 }

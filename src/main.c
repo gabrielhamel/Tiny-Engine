@@ -9,23 +9,25 @@
  *
  */
 
+#include <stdio.h>
+
 #include "engine.h"
 
 typedef struct {
 
 } duckhunt_t;
 
-void update(duckhunt_t *game, float elapsed_time)
+void update(void *game, float elapsed_time)
+{
+    printf("update(%f)\n", elapsed_time);
+}
+
+void draw(void *game, window_t *window)
 {
 
 }
 
-void draw(duckhunt_t *game, window_t *window)
-{
-
-}
-
-void handle_key(duckhunt_t *game, sfKeyCode code, bool pressed)
+void handle_key(void *game, sfKeyCode code, bool pressed)
 {
     if (pressed && code == sfKeyEscape) {
         engine_stop();
@@ -34,7 +36,7 @@ void handle_key(duckhunt_t *game, sfKeyCode code, bool pressed)
 
 int main(int argc, char const *argv[])
 {
-    duckhunt_t duckhunt = {0};
+    duckhunt_t duckhunt;
     game_t game = {
         .update = update,
         .draw = draw,
@@ -43,6 +45,8 @@ int main(int argc, char const *argv[])
     };
     engine_create("My Engine", 1920, 1080, false);
     engine_set_game(&game);
+    // Update every one seconds
+    engine_set_refresh_rate(1.f);
     engine_launch();
     engine_destroy();
     return EXIT_SUCCESS;

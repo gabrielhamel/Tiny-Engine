@@ -27,13 +27,16 @@ window_t *window_create(const char *title,
                                         NULL);
     sfRenderWindow_setKeyRepeatEnabled(res->window, sfFalse);
     sfRenderWindow_setVerticalSyncEnabled(res->window, sfTrue);
-    res->time = sfClock_create();
     return res;
 }
 
 void window_destroy(window_t *window)
 {
     sfRenderWindow_destroy(window->window);
-    sfClock_destroy(window->time);
     free(window);
+}
+
+window_t *engine_get_window(void)
+{
+    return engine_get()->window;
 }

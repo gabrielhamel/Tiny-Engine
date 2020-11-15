@@ -20,7 +20,6 @@ typedef struct {
     unsigned int width;
     unsigned int height;
     sfRenderWindow *window;
-    sfClock *time;
 } window_t;
 
 window_t *window_create(const char *title,
