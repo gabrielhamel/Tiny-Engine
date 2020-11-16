@@ -12,9 +12,6 @@ NAME =		example
 
 CFLAGS +=	-I $(ENG_DIR)/include	\
 			-I $(INC_DIR)			\
-			-W						\
-			-Wall					\
-			-Wextra					\
 
 LDFLAGS +=	-L $(ENG_DIR)		\
 			-lengine			\

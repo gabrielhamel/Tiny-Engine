@@ -19,7 +19,7 @@
 typedef struct {
     void *content;
     void (*update)(void *content, float elapsed_time);
-    void (*draw)(void *content, window_t *window);
+    void (*draw)(void *content, sfRenderWindow *window);
     void (*handle_key)(void *content, sfKeyCode code, bool pressed);
 } game_t;
 

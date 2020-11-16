@@ -55,6 +55,7 @@ void engine_launch(void)
         }
         engine->elaspsed_time = sfTime_asSeconds(
                                     sfClock_restart(engine->time));
+        engine_update();
         sfRenderWindow_clear(GET_WINDOW(engine), sfBlack);
         engine_draw();
         sfRenderWindow_display(GET_WINDOW(engine));

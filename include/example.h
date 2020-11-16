@@ -15,11 +15,14 @@
 #include "game.h"
 
 typedef struct {
-
+    sfRectangleShape *rect;
 } example_t;
 
+example_t *example_create(void);
+void example_destroy(example_t *example);
+
 void ex_update(void *game, float elapsed_time);
-void ex_draw(void *game, window_t *window);
+void ex_draw(void *game, sfRenderWindow *window);
 void ex_handle_key(void *game, sfKeyCode code, bool pressed);
 
 #endif // EXAMPLE_H

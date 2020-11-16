@@ -16,16 +16,17 @@
 
 int main(int argc, char const *argv[])
 {
-    example_t example;
+    example_t *example = example_create();
     game_t game = {
         .update = ex_update,
         .draw = ex_draw,
         .handle_key = ex_handle_key,
-        .content = &example
+        .content = example
     };
     engine_create("My Engine", 1920, 1080, false);
     engine_set_game(&game);
     engine_launch();
     engine_destroy();
+    example_destroy(example);
     return EXIT_SUCCESS;
 }

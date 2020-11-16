@@ -42,5 +42,5 @@ void engine_draw(void)
 {
     engine_t *engine = engine_get();
 
-    engine->game->draw(engine->game->content, engine->window);
+    engine->game->draw(engine->game->content, GET_WINDOW(engine));
 }
