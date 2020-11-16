@@ -32,7 +32,6 @@ void engine_create(const char *title,
     engine->window = window_create(title, width, height, fullscreen);
     engine->elaspsed_time = 0;
     engine->event = (sfEvent){0};
-    engine->refresh_rate = DEFAULT_REFRESH_RATE;
     engine->time = sfClock_create();
 }
 
@@ -54,9 +53,8 @@ void engine_launch(void)
                                         &engine->event)) {
             engine_handle_event();
         }
-        if (engine_clock()) {
-            engine_update();
-        }
+        engine->elaspsed_time = sfTime_asSeconds(
+                                    sfClock_restart(engine->time));
         sfRenderWindow_clear(GET_WINDOW(engine), sfBlack);
         engine_draw();
         sfRenderWindow_display(GET_WINDOW(engine));

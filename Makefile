@@ -1,36 +1,39 @@
 SRC_DIR =	src
+INC_DIR =	include
 
-SRC =		$(SRC_DIR)/main.c				\
-			$(SRC_DIR)/engine/engine.c		\
-			$(SRC_DIR)/engine/pipeline.c	\
-			$(SRC_DIR)/engine/window.c		\
-			$(SRC_DIR)/engine/keyboard.c	\
-			$(SRC_DIR)/engine/settings.c	\
+ENG_DIR =	lib/engine
+
+SRC =		$(SRC_DIR)/main.c		\
+			$(SRC_DIR)/example.c	\
 
 OBJ =		$(SRC:.c=.o)
 
-NAME =		engine
+NAME =		example
 
-CFLAGS +=	-I include			\
-			-I include/engine	\
+CFLAGS +=	-I $(ENG_DIR)/include	\
+			-I $(INC_DIR)			\
+			-W						\
+			-Wall					\
+			-Wextra					\
 
-LDFLAGS +=	-lcsfml-graphics	\
-			-lcsfml-window		\
-			-lcsfml-audio		\
+LDFLAGS +=	-L $(ENG_DIR)		\
+			-lengine			\
 			-lcsfml-system		\
-			-W					\
-			-Wall				\
-			-Wextra				\
+			-lcsfml-window		\
+			-lcsfml-graphics	\
 
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
+			make -C $(ENG_DIR)
 			gcc -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
+			make clean -C $(ENG_DIR)
 			rm -f $(OBJ)
 
 fclean:		clean
+			make fclean -C $(ENG_DIR)
 			rm -f $(NAME)
 
 re:			fclean all

@@ -12,19 +12,6 @@
 #include "engine.h"
 #include "engine_private.h"
 
-bool engine_clock(void)
-{
-    engine_t *engine = engine_get();
-    float clock_time = sfTime_asSeconds(sfClock_getElapsedTime(engine->time));
-
-    if (clock_time >= engine->refresh_rate) {
-        engine->elaspsed_time = sfTime_asSeconds(
-                                    sfClock_restart(engine->time));
-        return true;
-    }
-    return false;
-}
-
 void engine_handle_event(void)
 {
     engine_t *engine = engine_get();

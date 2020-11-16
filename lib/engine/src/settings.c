@@ -19,10 +19,3 @@ void engine_set_game(game_t *game)
 
     engine->game = game;
 }
-
-void engine_set_refresh_rate(float milliseconds)
-{
-    engine_t *engine = engine_get();
-
-    engine->refresh_rate = milliseconds;
-}
