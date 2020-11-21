@@ -3,8 +3,10 @@ INC_DIR =	include
 
 ENG_DIR =	lib/engine
 
-SRC =		$(SRC_DIR)/main.c		\
-			$(SRC_DIR)/example.c	\
+SRC =		$(SRC_DIR)/main.c			\
+			$(SRC_DIR)/example.c		\
+			$(SRC_DIR)/moving_rect.c	\
+			$(SRC_DIR)/game.c			\
 
 OBJ =		$(SRC:.c=.o)
 

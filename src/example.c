@@ -9,7 +9,6 @@
  *
  */
 
-#include <stdio.h>
 #include <engine.h>
 
 #include "example.h"
@@ -17,29 +16,36 @@
 void ex_update(void *game, float elapsed_time)
 {
     example_t *example = game;
-    sfVector2f speed = {0, 0};
+    moving_rect_t *elem;
 
-    speed.x += sfKeyboard_isKeyPressed(sfKeyD);
-    speed.x -= sfKeyboard_isKeyPressed(sfKeyQ);
-    speed.y -= sfKeyboard_isKeyPressed(sfKeyZ);
-    speed.y += sfKeyboard_isKeyPressed(sfKeyS);
+    if (example->click_cooldown > 0) {
+        example->click_cooldown -= elapsed_time;
+    }
 
-    speed.x *= 400.f * elapsed_time;
-    speed.y *= 400.f * elapsed_time;
-
-    sfRectangleShape_rotate(example->rect, 100.f * elapsed_time);
-    sfRectangleShape_move(example->rect, speed);
+    if (example->click_cooldown <= 0.f &&
+    sfMouse_isButtonPressed(sfMouseLeft)) {
+        example->click_cooldown = 0.5f;
+        ex_add_entity(example);
+    }
+    LIST_FOREACH(elem, &example->moving_rects, entry) {
+        moving_rect_update(elem, elapsed_time);
+    }
 }
 
 void ex_draw(void *game, sfRenderWindow *window)
 {
     example_t *example = game;
+    moving_rect_t *elem;
 
-    sfRenderWindow_drawRectangleShape(window, example->rect, NULL);
+    LIST_FOREACH(elem, &example->moving_rects, entry) {
+        moving_rect_draw(elem, window);
+    }
 }
 
 void ex_handle_key(void *game, sfKeyCode code, bool pressed)
 {
+    example_t *example = game;
+
     if (pressed && code == sfKeyEscape) {
         engine_stop();
     }
@@ -49,15 +55,13 @@ example_t *example_create(void)
 {
     example_t *res = malloc(sizeof(example_t));
 
-    res->rect = sfRectangleShape_create();
-    sfRectangleShape_setFillColor(res->rect, sfRed);
-    sfRectangleShape_setPosition(res->rect, (sfVector2f){500, 300});
-    sfRectangleShape_setSize(res->rect, (sfVector2f){50, 50});
+    LIST_INIT(&res->moving_rects);
+    res->click_cooldown = 0.f;
     return res;
 }
 
 void example_destroy(example_t *example)
 {
-    sfRectangleShape_destroy(example->rect);
+    // moving_rect_destroy(example->entity);
     free(example);
 }

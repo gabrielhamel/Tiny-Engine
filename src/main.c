@@ -16,6 +16,7 @@
 
 int main(int argc, char const *argv[])
 {
+    engine_create("My Engine", 1920, 1080, false);
     example_t *example = example_create();
     game_t game = {
         .update = ex_update,
@@ -23,7 +24,6 @@ int main(int argc, char const *argv[])
         .handle_key = ex_handle_key,
         .content = example
     };
-    engine_create("My Engine", 1920, 1080, false);
     engine_set_game(&game);
     engine_launch();
     engine_destroy();
